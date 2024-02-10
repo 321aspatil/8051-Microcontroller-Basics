@@ -1,0 +1,53 @@
+C51 COMPILER V9.60.7.0   ECHOINTERRUPT                                                     04/15/2023 20:50:03 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE ECHOINTERRUPT
+OBJECT MODULE PLACED IN .\Objects\echointerrupt.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE echointerrupt.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\List
+                    -ings\echointerrupt.lst) TABS(2) OBJECT(.\Objects\echointerrupt.obj)
+
+line level    source
+
+   1          #include <REG51.H>
+   2          sbit LED_RI = P1^0;
+   3          sbit LED_TI = P1^1;
+   4          void ser_isr(void) interrupt 4
+   5          {  unsigned char mybyte; 
+   6   1          if(RI==1)
+   7   1          {
+   8   2            mybyte = SBUF;
+   9   2            SBUF = mybyte;
+  10   2            LED_RI = ~LED_RI;
+  11   2            RI = 0; 
+  12   2          }
+  13   1        if(TI==1)
+  14   1          {
+  15   2            LED_TI = ~LED_TI;
+  16   2            TI = 0;
+  17   2          }
+  18   1      }
+  19          void main(void)
+  20          {
+  21   1        LED_RI = 0;
+  22   1        LED_TI = 1;
+  23   1        IE = 0X90;
+  24   1        TMOD = 0x20;
+  25   1        TH1 = 0xFA;
+  26   1        SCON = 0x50;
+  27   1        TR1 = 1;
+  28   1          while(1);
+  29   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     50    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

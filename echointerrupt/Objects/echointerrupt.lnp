@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\echointerrupt.obj" 
+TO ".\Objects\echointerrupt" 
+PRINT(".\Listings\echointerrupt.m51")
