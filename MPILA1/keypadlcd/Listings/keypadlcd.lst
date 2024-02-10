@@ -1,0 +1,186 @@
+C51 COMPILER V9.60.7.0   KEYPADLCD                                                         03/30/2023 21:49:51 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE KEYPADLCD
+OBJECT MODULE PLACED IN .\Objects\keypadlcd.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE keypadlcd.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\keypadlcd.lst) TABS(2) OBJECT(.\Objects\keypadlcd.obj)
+
+line level    source
+
+   1          #include <REG51.H>
+   2          
+   3          sbit rs = P3^4;
+   4          sbit rw = P3^5;
+   5          sbit e = P3^6;
+   6          
+   7          sbit R0 = P1^0;
+   8          sbit R1 = P1^1;
+   9          sbit R2 = P1^2;
+  10          sbit R3 = P1^3;
+  11          
+  12          sbit C0 = P1^4;
+  13          sbit C1 = P1^5;
+  14          sbit C2 = P1^6;
+  15          
+  16          int cnt1=0;
+  17          int cnt2=0;
+  18          void delay()
+  19          {
+  20   1        int i;
+  21   1        e = 1;
+  22   1        for(i=0;i<30000;i++);
+  23   1        e = 0;
+  24   1      }
+  25          
+  26          void lcd_cmd(unsigned int ch)
+  27          {
+  28   1        rs = 0;
+  29   1        rw = 0;
+  30   1        P2 = 0x00;
+  31   1        P2 = ch;
+  32   1        delay();
+  33   1      }
+  34          
+  35          void lcd_data(unsigned char ch)
+  36          {
+  37   1        rs = 1;
+  38   1        rw = 0;
+  39   1        P2 = 0x00;
+  40   1        P2 = ch;
+  41   1        cnt1++;
+  42   1        cnt2++;
+  43   1        delay();
+  44   1        
+  45   1      }
+  46          
+  47          void main()
+  48          {
+  49   1        lcd_cmd(0x38);
+  50   1        lcd_cmd(0x01);
+  51   1        lcd_cmd(0x0c);
+  52   1        lcd_cmd(0x80);
+  53   1        lcd_cmd(0x06);
+  54   1      
+C51 COMPILER V9.60.7.0   KEYPADLCD                                                         03/30/2023 21:49:51 PAGE 2   
+
+  55   1        while(1)
+  56   1        {
+  57   2          if(cnt1==16){
+  58   3            lcd_cmd(0xC0);
+  59   3            cnt1=0;
+  60   3          }
+  61   2          if(cnt2==32){
+  62   3            lcd_cmd(0x01);
+  63   3            cnt2=0;
+  64   3          }
+  65   2          else{
+  66   3          R0 = R1 = R2 = R3 = 1;
+  67   3          R0 = 0;
+  68   3          if(C0 == 0)
+  69   3          {
+  70   4            lcd_data('1');
+  71   4            while(C0 == 0);
+  72   4          }
+  73   3          if(C1 == 0)
+  74   3          {
+  75   4            lcd_data('2');
+  76   4            while(C1 == 0);
+  77   4          }
+  78   3          if(C2 == 0)
+  79   3          {
+  80   4            lcd_data('3');
+  81   4            while(C2 == 0);
+  82   4          }
+  83   3          
+  84   3          R0 = R1 = R2 = R3 = 1;
+  85   3          R1 = 0;
+  86   3          if(C0 == 0)
+  87   3          {
+  88   4            lcd_data('4');
+  89   4            while(C0 == 0);
+  90   4          }
+  91   3          if(C1 == 0)
+  92   3          {
+  93   4            lcd_data('5');
+  94   4            while(C1 == 0);
+  95   4          }
+  96   3          if(C2 == 0)
+  97   3          {
+  98   4            lcd_data('6');
+  99   4            while(C2 == 0);
+ 100   4          }
+ 101   3          
+ 102   3          /****** */
+ 103   3          R0 = R1 = R2 = R3 = 1;
+ 104   3          R2 = 0;
+ 105   3          if(C0 == 0)
+ 106   3          {
+ 107   4            lcd_data('7');
+ 108   4            while(C0 == 0);
+ 109   4          }
+ 110   3          if(C1 == 0)
+ 111   3          {
+ 112   4            lcd_data('8');
+ 113   4            while(C1 == 0);
+ 114   4          }
+ 115   3          if(C2 == 0)
+ 116   3          {
+C51 COMPILER V9.60.7.0   KEYPADLCD                                                         03/30/2023 21:49:51 PAGE 3   
+
+ 117   4            lcd_data('9');
+ 118   4            while(C2 == 0);
+ 119   4          }
+ 120   3          
+ 121   3          /****** */
+ 122   3          
+ 123   3          R0 = R1 = R2 = R3 = 1;
+ 124   3          R3 = 0;
+ 125   3          if(C0 == 0)
+ 126   3          {
+ 127   4            lcd_data('*');
+ 128   4            while(C0 == 0);
+ 129   4          }
+ 130   3          R0 = R1 = R2 = R3 = 1;
+ 131   3          R3 = 0;
+ 132   3          if(C1 == 0)
+ 133   3          {
+ 134   4            lcd_data('0');
+ 135   4            while(C1 == 0);
+ 136   4          }
+ 137   3          R0 = R1 = R2 = R3 = 1;
+ 138   3          R3 = 0;
+ 139   3          if(C2 == 0)
+ 140   3          {
+ 141   4            lcd_data('#');
+ 142   4            while(C2 == 0);
+ 143   4          }
+ 144   3        }
+ 145   2        }
+ 146   1      }
+ 147          
+ 148          
+ 149          
+ 150          
+ 151          
+ 152          
+ 153          
+ 154          
+ 155          
+ 156          
+ 157          
+ 158          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    334    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

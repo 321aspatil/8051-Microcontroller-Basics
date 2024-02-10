@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\keypadlcd.obj" 
+TO ".\Objects\kypadlcd" 
+PRINT(".\Listings\kypadlcd.m51")

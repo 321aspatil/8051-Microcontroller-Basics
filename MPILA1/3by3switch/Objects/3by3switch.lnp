@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\3by3switch.obj" 
+TO ".\Objects\3by3switch" 
+PRINT(".\Listings\3by3switch.m51")
