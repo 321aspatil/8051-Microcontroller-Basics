@@ -1,0 +1,59 @@
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    03/03/2023  22:09:50  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\bignumarray.obj TO .\Objects\bignum PRINT (.\Listings\bignum.m51)
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\bignumarray.obj (BIGNUMARRAY)
+
+
+LINK MAP OF MODULE:  .\Objects\bignum (BIGNUMARRAY)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0019H     ABSOLUTE     
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\bignum (BIGNUMARRAY)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        BIGNUMARRAY
+  D:00F0H         SYMBOL        B
+  C:0009H         SYMBOL        BACK
+  C:000FH         SYMBOL        LOOP
+  C:0013H         SYMBOL        LOOP1
+  C:0016H         SYMBOL        NEXT
+  C:0000H         LINE#         3
+  C:0002H         LINE#         4
+  C:0003H         LINE#         5
+  C:0004H         LINE#         6
+  C:0005H         LINE#         7
+  C:0006H         LINE#         8
+  C:0008H         LINE#         9
+  C:0009H         LINE#         10
+  C:000AH         LINE#         11
+  C:000DH         LINE#         12
+  C:000FH         LINE#         13
+  C:0011H         LINE#         14
+  C:0013H         LINE#         15
+  C:0014H         LINE#         16
+  C:0016H         LINE#         17
+  -------         ENDMOD        BIGNUMARRAY
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0019H BYTE ( 1%) *
+******************************************************************************
+
+Program Size: data=8.0 xdata=0 code=25
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

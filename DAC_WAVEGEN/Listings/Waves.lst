@@ -1,0 +1,109 @@
+C51 COMPILER V9.60.7.0   WAVES                                                             05/25/2023 07:31:37 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE WAVES
+OBJECT MODULE PLACED IN .\Objects\Waves.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Waves.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\Wav
+                    -es.lst) TABS(2) OBJECT(.\Objects\Waves.obj)
+
+line level    source
+
+   1          //sine wave 1
+   2          //#include <REG51.H>
+   3          //sfr DAC_DATA=0xA0;
+   4          //void main()
+   5          //{
+   6          //  unsigned char SINE[12]={128,191,238,255,238,191,128,64,17,0,17,64};
+   7          //  unsigned char i;
+   8          //  while(1)
+   9          //  {
+  10          //    for(i=0;i<12;i++)
+  11          //    {
+  12          //      DAC_DATA=SINE[i];
+  13          //    }
+  14          //  }
+  15          //}
+  16          
+  17          //sine wave 2
+  18          #include <REG51.H>
+  19          sfr DAC_DATA=0xA0;
+  20          void main()
+  21          {
+  22   1        unsigned char SINE[12]={128,191,238,255,238,191,128,64,17,0,17,64};
+  23   1        unsigned char i;
+  24   1        while(1)
+  25   1        {
+  26   2          for(i=0;i<12;i++)
+  27   2          {
+  28   3            DAC_DATA=SINE[i];
+  29   3          }
+  30   2        }
+  31   1      }
+  32          
+  33          //sawtooth wave form 1
+  34          //#include <REG51.H>
+  35          //sfr DAC_DATA=0xA0;
+  36          //void main()
+  37          //{
+  38          //  unsigned char i;
+  39          //  while(1)
+  40          //  {
+  41          //    for(i=0;i<255;i++)
+  42          //    {
+  43          //      DAC_DATA=i;
+  44          //    }
+  45          //  }
+  46          //}
+  47          
+  48          
+  49          //sawtooth wave form 2
+  50          //#include <REG51.H>
+  51          //sfr DAC_DATA=0xA0;
+  52          //void main()
+  53          //{
+  54          //  unsigned char i;
+C51 COMPILER V9.60.7.0   WAVES                                                             05/25/2023 07:31:37 PAGE 2   
+
+  55          //  while(1)
+  56          //  {
+  57          //    for(i=255;i>=0;i--)
+  58          //    {
+  59          //      DAC_DATA=i;
+  60          //    }
+  61          //  }
+  62          //}
+  63          
+  64          
+  65          //triangular wave
+  66          //#include <REG51.H>
+  67          //sfr DAC_DATA=0xA0;
+  68          //void main()
+  69          //{
+  70          //  unsigned char i;
+  71          //  while(1)
+  72          //  {
+  73          //    for(i=0;i<255;i++)
+  74          //    {
+  75          //      DAC_DATA=i;
+  76          //    }
+  77          //    for(i=255;i>0;i--)
+  78          //    {
+  79          //      DAC_DATA=i;
+  80          //    }
+  81          //  }
+  82          //}
+  83          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     34    ----
+   CONSTANT SIZE    =     12    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      12
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

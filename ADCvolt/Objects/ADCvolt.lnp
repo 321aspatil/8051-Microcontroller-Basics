@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\code.obj" 
+TO ".\Objects\ADCvolt" 
+PRINT(".\Listings\ADCvolt.m51")

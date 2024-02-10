@@ -1,0 +1,48 @@
+A51 MACRO ASSEMBLER  BIGNUMARRAY                                                          03/03/2023 22:09:50 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\bignumarray.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE bignumarray.a51 SET(SMALL) DEBUG PRINT(.\Listings\bignumarray.lst) OBJE
+                      CT(.\Objects\bignumarray.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     
+0000                   2     ORG 0000H
+0000 7850              3             MOV R0,#50H 
+0002 E6                4             MOV A,@R0
+0003 FA                5             MOV R2,A
+0004 1A                6             DEC R2
+0005 08                7             INC R0
+0006 86F0              8             MOV B,@R0
+0008 08                9             INC R0
+0009 E6               10             BACK:MOV A,@R0
+000A B5F002           11             CJNE A,B,LOOP
+000D 8004             12             JMP LOOP1
+000F 4002             13             LOOP:JC LOOP1
+0011 F5F0             14             MOV B,A
+0013 08               15             LOOP1:INC R0
+0014 DAF3             16             DJNZ R2,BACK
+0016 85F060           17             NEXT:MOV 60H,B
+                      18     END
+                                     
+A51 MACRO ASSEMBLER  BIGNUMARRAY                                                          03/03/2023 22:09:50 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+BACK . . . . . . .  C ADDR   0009H   A   
+LOOP . . . . . . .  C ADDR   000FH   A   
+LOOP1. . . . . . .  C ADDR   0013H   A   
+NEXT . . . . . . .  C ADDR   0016H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

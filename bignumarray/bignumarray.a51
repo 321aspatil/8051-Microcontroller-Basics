@@ -1,0 +1,19 @@
+//TO find the largest number in array
+ORG 0000H
+	MOV R0,#50H 
+	MOV A,@R0
+	MOV R2,A
+	DEC R2
+	INC R0
+	MOV B,@R0
+	INC R0
+	BACK:MOV A,@R0
+	CJNE A,B,LOOP
+	JMP LOOP1
+	LOOP:JC LOOP1
+	MOV B,A
+	LOOP1:INC R0
+	DJNZ R2,BACK
+	NEXT:MOV 60H,B
+END
+	

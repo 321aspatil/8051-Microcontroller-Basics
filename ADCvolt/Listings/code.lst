@@ -1,0 +1,120 @@
+C51 COMPILER V9.60.7.0   CODE                                                              05/24/2023 18:55:07 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE CODE
+OBJECT MODULE PLACED IN .\Objects\code.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE code.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\code
+                    -.lst) TABS(2) OBJECT(.\Objects\code.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          #include<stdio.h>
+   3          sbit ale=P3^3;  
+   4          sbit oe=P3^6; 
+   5          sbit start=P3^4; 
+   6          sbit eoc=P3^5;  
+   7          sbit clk=P3^7;  
+   8          sbit ADDA=P3^0;  //Address pins for selecting input channels.
+   9          sbit ADDB=P3^1;
+  10          sbit ADDC=P3^2;
+  11          #define lcd P2  //lcd 
+  12          sbit rs=P2^0;
+  13          sbit rw=P2^1;
+  14          sbit en=P2^2;
+  15          #define Adc_Data P1  //ADC
+  16          
+  17          int result[3],ADC_value;
+  18          
+  19          void delay(unsigned int count) 
+  20          {
+  21   1          int i,j;
+  22   1          for(i=0;i<count;i++)
+  23   1          for(j=0;j<1000;j++);
+  24   1      }
+  25          void lcd_data(unsigned char ch)
+  26          {
+  27   1          rs=1;
+  28   1          rw=0;
+  29   1          lcd=ch & 0xF0;
+  30   1          en=1;
+  31   1          delay(1);
+  32   1          en=0;
+  33   1          lcd=ch<<4 & 0xF0;
+  34   1          en=1;
+  35   1          delay(1);
+  36   1          en=0;
+  37   1      }
+  38          void lcdcmd(unsigned char ch)
+  39          {
+  40   1          rs=0;
+  41   1          lcd=ch & 0xf0;
+  42   1          en=1;
+  43   1          delay(1);
+  44   1          en=0;
+  45   1          
+  46   1          lcd=ch<<4 & 0xF0;
+  47   1          en=1;
+  48   1          delay(1);
+  49   1          en=0;
+  50   1      }
+  51          void lcdprint(char *str) //Function to send string data to LCD.
+  52          {
+  53   1          while(*str)
+  54   1          {
+C51 COMPILER V9.60.7.0   CODE                                                              05/24/2023 18:55:07 PAGE 2   
+
+  55   2              lcd_data(*str);
+  56   2              str++;
+  57   2          }
+  58   1      }
+  59          void lcd_Init()
+  60          {
+  61   1        lcdcmd(0x38);
+  62   1        lcdcmd(0x02);
+  63   1        lcdcmd(0x0e);
+  64   1        lcdcmd(0x01);
+  65   1      }
+  66          void show()
+  67          { 
+  68   1      sprintf(result,"%d",ADC_value);
+*** WARNING C182 IN LINE 68 OF code.c: pointer to different objects
+  69   1      lcdprint(result);
+*** WARNING C182 IN LINE 69 OF code.c: pointer to different objects
+  70   1      lcdprint(" ");
+  71   1      }
+  72          void main()
+  73          {
+  74   1          eoc=1;
+  75   1          ale=0;
+  76   1          oe=0;
+  77   1          start=0;
+  78   1          lcd_Init();
+  79   1          while(1)
+  80   1          {
+  81   2              ADDC=0; ADDB=0;ADDA=0;
+  82   2              ADC_value=0;
+  83   2              lcdcmd(0xc0);
+  84   2              ale=1;start=1;
+  85   2              delay(1);
+  86   2              ale=0;start=0;
+  87   2              ADC_value=Adc_Data;
+  88   2              delay(1);
+  89   2              show();
+  90   2              ADC_value=0;
+  91   2          }  
+  92   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    238    ----
+   CONSTANT SIZE    =      5    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      8       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)

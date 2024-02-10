@@ -1,0 +1,70 @@
+C51 COMPILER V9.60.7.0   DISPHELP                                                          05/24/2023 20:24:37 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE DISPHELP
+OBJECT MODULE PLACED IN .\Objects\disphelp.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE disphelp.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -disphelp.lst) TABS(2) OBJECT(.\Objects\disphelp.obj)
+
+line level    source
+
+   1          #include <REG51.H>
+   2          sbit pin=P1^0;
+   3          sfr DATA = 0xA0;
+   4          
+   5          unsigned char msg[4]={0x76,0X79,0X38,0X73};
+   6          void delay()
+   7          {
+   8   1        int i;
+   9   1        for(i=0;i<10;i++){
+  10   2        TH0=0x4F;
+  11   2        TL0=0xBD;
+  12   2        TR0=1;
+  13   2        pin=~pin;
+  14   2        while(TF0==0);
+  15   2        TF0=0;
+  16   2        TR0=1;
+  17   2        }
+  18   1      }
+  19          void main()
+  20          {
+  21   1        TMOD=0x01;
+  22   1        while(1)
+  23   1        {
+  24   2          P3 = 0x1E;
+  25   2          DATA = msg[0];
+  26   2          delay();
+  27   2          
+  28   2          P3 = 0x1D;
+  29   2          DATA = msg[1];
+  30   2          delay();
+  31   2          
+  32   2          P3 = 0x1B;
+  33   2          DATA = msg[2];
+  34   2          delay();
+  35   2          
+  36   2          P3 = 0x17;
+  37   2          DATA = msg[3];
+  38   2          delay();
+  39   2          
+  40   2          P3 = 0x0F;
+  41   2          DATA = msg[3];
+  42   2          delay();
+  43   2        }
+  44   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     82    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+C51 COMPILER V9.60.7.0   DISPHELP                                                          05/24/2023 20:24:37 PAGE 2   
+
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

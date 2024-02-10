@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\ADCtemp.obj" 
+TO ".\Objects\ADCtemp" 
+PRINT(".\Listings\ADCtemp.m51")

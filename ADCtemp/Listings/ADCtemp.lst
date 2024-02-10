@@ -1,0 +1,173 @@
+C51 COMPILER V9.60.7.0   ADCTEMP                                                           04/03/2023 22:59:54 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE ADCTEMP
+OBJECT MODULE PLACED IN .\Objects\ADCtemp.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE ADCtemp.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\A
+                    -DCtemp.lst) TABS(2) OBJECT(.\Objects\ADCtemp.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          #include<string.h>
+   3          sbit RS = P2^5; 
+   4          sbit RW = P2^6;
+   5          sbit EN = P2^7;
+   6          sbit ale=P2^3;  
+   7          sbit oe=P2^4; 
+   8          sbit start=P2^1; 
+   9          sbit eoc=P2^0;  
+  10          sbit clk=P2^2; 
+  11          sbit chc=P0^7;  //Address pins for selecting input channels.
+  12          sbit chb=P0^6;
+  13          sbit cha=P0^5;
+  14          void delay(int t); 
+  15          void lcd_init(void);
+  16          void lcd_command(char c);
+  17          void lcd_data(char d);
+  18          void str(char a[]);
+  19          void print( long float p);
+  20          long float k;
+  21          unsigned long int q,r,x,y,z;
+  22          void timer0() interrupt 1  // TIMER 0 interrupt ISR
+  23          {
+  24   1          clk=~clk;
+  25   1      }
+  26          void main()            // MAIN PROGRAM
+  27          {
+  28   1        lcd_init();                                // lcd initialization
+  29   1        str("!!welcome!!");
+  30   1        lcd_command(0x01);  // clear display
+  31   1        str("Temp:");
+  32   1        lcd_command(96); //custom character (°c) display 
+  33   1        lcd_data(0x10);
+  34   1        lcd_data(0x07);
+  35   1        lcd_data(0x08);
+  36   1        lcd_data(0x08);
+  37   1        lcd_data(0x08);
+  38   1        lcd_data(0x08);
+  39   1        lcd_data(0x07);
+  40   1        lcd_command(0x8b);
+  41   1        lcd_data(4);
+  42   1        eoc=1;             // make eoc an input
+  43   1        ale=0;
+  44   1        oe=0;
+  45   1        start=0;
+  46   1        TMOD=0x02;    // timer 0 in mode 2
+  47   1        TH0=0xc2;                   //     15khz
+  48   1        IE=0x82; //  set timer 0 interrupt
+  49   1        TR0=1;   // start timer 0
+  50   1        while(1)
+  51   1        { 
+  52   2          chc=0;  // select channel 0
+  53   2          chb=0;
+  54   2          cha=0;
+C51 COMPILER V9.60.7.0   ADCTEMP                                                           04/03/2023 22:59:54 PAGE 2   
+
+  55   2          ale=1;  // send high to low pulse on start and ale pin
+  56   2          start=1;
+  57   2          delay(1);
+  58   2          ale=0;
+  59   2          start=0;
+  60   2          while(eoc==1);     // wait for conversion
+  61   2          while(eoc==0); 
+  62   2          oe=1;
+  63   2          k=P1;
+  64   2          lcd_command(0x85);
+  65   2          print(k);   // send the digital data to lcd 
+  66   2          oe=0;
+  67   2        }
+  68   1      }
+  69          void str(char a[])  // lcd function to display string
+  70          {
+  71   1      int j;
+  72   1        for(j=0;a[j]!='\0';j++)
+  73   1        {
+  74   2        lcd_data(a[j]);
+  75   2        }
+  76   1      }
+  77          void lcd_init(void)  // lcd initialization
+  78          {
+  79   1        lcd_command(0x38); //8 bit,2 line,5 x 8 dots
+  80   1        lcd_command(0x01); // clear display
+  81   1        lcd_command(0x0f); // display on,cursor blinking
+  82   1        lcd_command(0x06); // entry mode
+  83   1        lcd_command(0x0c); //cursor off
+  84   1        lcd_command(0x80);//Force cursor to the begining of the first row
+  85   1      }
+  86          void lcd_command(char c) // lcd command function
+  87          {
+  88   1        P3=c;
+  89   1        RS=0;  // select command register
+  90   1        RW=0;
+  91   1        EN=1;
+  92   1        delay(5);
+  93   1        EN=0;
+  94   1        delay(5);
+  95   1      }
+  96          void lcd_data(char d) // lcd data function
+  97          {
+  98   1        P3=d;
+  99   1        RS=1;   // select data register
+ 100   1        RW=0;
+ 101   1        EN=1;
+ 102   1        delay(5);
+ 103   1        EN=0;
+ 104   1        delay(5);
+ 105   1      }
+ 106          void delay(int t)      // delay function
+ 107          {
+ 108   1        int j;
+ 109   1        for(j=0;j<t*1275;j++);
+ 110   1      }
+ 111          void print( long float p)  // number display function
+ 112          {
+ 113   1        x=p*10;
+ 114   1        if(x>=1000)
+ 115   1        {
+ 116   2          q=x/1000;
+C51 COMPILER V9.60.7.0   ADCTEMP                                                           04/03/2023 22:59:54 PAGE 3   
+
+ 117   2          q=q+48;
+ 118   2          y=(x%1000)/100;
+ 119   2          y=y+48;
+ 120   2          z=((x%1000)%100)/10;
+ 121   2          z=z+48;
+ 122   2          r=x%10;
+ 123   2          r=r+48;
+ 124   2          lcd_data(q);
+ 125   2          lcd_data(y);
+ 126   2          lcd_data(z);
+ 127   2          lcd_data(46); // ASCII value of point
+ 128   2          lcd_data(r);
+ 129   2        }
+ 130   1        else
+ 131   1        {
+ 132   2          q=x/100;
+ 133   2          q=q+48;
+ 134   2          y=(x%100)/10;
+ 135   2          y=y+48;
+ 136   2          z=x%10;
+ 137   2          z=z+48;
+ 138   2          lcd_data(q);
+ 139   2          lcd_data(y);
+ 140   2          lcd_data(46);   // ASCII value of point
+ 141   2          lcd_data(z);
+ 142   2          r=0;
+ 143   2          lcd_data(r);
+ 144   2        }
+ 145   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    839    ----
+   CONSTANT SIZE    =     18    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     24       9
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
