@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\Echo.obj" 
+TO ".\Objects\Echo" 
+PRINT(".\Listings\Echo.m51")
