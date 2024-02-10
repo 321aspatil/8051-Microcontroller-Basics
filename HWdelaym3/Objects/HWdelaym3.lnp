@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\prog.obj" 
+TO ".\Objects\HWdelaym3" 
+PRINT(".\Listings\HWdelaym3.m51")

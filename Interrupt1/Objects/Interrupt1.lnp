@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\prog.obj" 
+TO ".\Objects\Interrupt1" 
+PRINT(".\Listings\Interrupt1.m51")

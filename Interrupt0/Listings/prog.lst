@@ -1,0 +1,69 @@
+C51 COMPILER V9.60.7.0   PROG                                                              04/07/2023 13:15:18 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE PROG
+OBJECT MODULE PLACED IN .\Objects\prog.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE prog.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\prog
+                    -.lst) TABS(2) OBJECT(.\Objects\prog.obj)
+
+line level    source
+
+   1          //External interrupt 0 as low level sensitive interrupt
+   2          #include <REG51.H>
+   3          sbit LED=P1^0;
+   4          void delay(unsigned int time){
+   5   1        unsigned int i,j;
+   6   1        for(i=0;i<time;i++){
+   7   2          for(j=0;j<1275;j++);
+   8   2        }
+   9   1      }
+  10          void ext0_isr(void) interrupt 0
+  11          {
+  12   1      
+  13   1        LED=0;
+  14   1        delay(5);
+  15   1        LED=1;
+  16   1        delay(5);
+  17   1      }
+  18          
+  19          void main()
+  20          {
+  21   1        
+  22   1        //LED=~LED;
+  23   1        IE=0X81;
+  24   1        while(1);
+  25   1      }
+  26          
+  27          //External interrupt 0 as falling edge sensitive interrupt
+  28          //#include <REG51.H>
+  29          //sbit LED=P1^0;
+  30          
+  31          //void ext0_isr(void) interrupt 0
+  32          //{
+  33          
+  34          //  LED=~LED;
+  35          //}
+  36          
+  37          //void main()
+  38          //{
+  39          //  LED=~LED;
+  40          //  TCON=0X01;//external interrupt 0 as falling edge sensitive interrupt
+  41          //  IE=0X81;
+  42          //  while(1);
+  43          //}
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     87    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+C51 COMPILER V9.60.7.0   PROG                                                              04/07/2023 13:15:18 PAGE 2   
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
