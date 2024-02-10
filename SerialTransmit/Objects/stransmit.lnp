@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\stransmit.obj" 
+TO ".\Objects\stransmit" 
+PRINT(".\Listings\stransmit.m51")

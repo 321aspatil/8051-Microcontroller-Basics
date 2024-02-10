@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\serialtransmit.obj" 
+TO ".\Objects\SerialTransmitString" 
+PRINT(".\Listings\SerialTransmitString.m51")

@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\prog.obj" 
+TO ".\Objects\frequencyex" 
+PRINT(".\Listings\frequencyex.m51")

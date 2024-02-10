@@ -1,0 +1,66 @@
+C51 COMPILER V9.60.7.0   SERIALTRANSMIT                                                    04/27/2023 11:21:03 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE SERIALTRANSMIT
+OBJECT MODULE PLACED IN .\Objects\serialtransmit.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE serialtransmit.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Lis
+                    -tings\serialtransmit.lst) TABS(2) OBJECT(.\Objects\serialtransmit.obj)
+
+line level    source
+
+   1          #include <REG51.H>
+   2          void UART_Init()
+   3          {
+   4   1        TMOD=0x20;//Timer 1,8 bit auto reload mode
+   5   1        TH1=0xFA;//Load value for 4800 baud rate
+   6   1        SCON=0x40;//Mode 1 for transmission
+   7   1        TR1=1;//start timer 1
+   8   1      }
+   9          void Transmit_data(char tx_data)
+  10          {
+  11   1        SBUF=tx_data;//load char in SBUF
+  12   1        while(TI==0);//wait until stop bit transmit
+  13   1        TI=0;//clear TI flag
+  14   1      }
+  15          void String(char *str)
+  16          {
+  17   1        int i;
+  18   1        for(i=0;str[i]!=0;i++)
+  19   1        {
+  20   2          Transmit_data(str[i]);
+  21   2        }
+  22   1      }
+  23          void delay(unsigned int time)
+  24          {
+  25   1        int i,j;
+  26   1        for(i=0;i<time;i++)
+  27   1        {
+  28   2          for(j=0;j<1275;j++);
+  29   2        }
+  30   1      }
+  31          void main()
+  32          {
+  33   1        UART_Init();
+  34   1        while(1)
+  35   1        {
+  36   2          while(1){
+  37   3          String("Aniket Sanjay Patil");
+  38   3          Transmit_data(0x0D);//Enter the next lines
+  39   3          delay(300);
+  40   3          }
+  41   2        }
+  42   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    114    ----
+   CONSTANT SIZE    =     20    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
