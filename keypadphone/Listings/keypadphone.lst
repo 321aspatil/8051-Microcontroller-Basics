@@ -1,0 +1,45 @@
+C51 COMPILER V9.60.7.0   KEYPADPHONE                                                       05/01/2023 14:29:46 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE KEYPADPHONE
+OBJECT MODULE PLACED IN .\Objects\keypadphone.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE keypadphone.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listin
+                    -gs\keypadphone.lst) TABS(2) OBJECT(.\Objects\keypadphone.obj)
+
+line level    source
+
+   1          #include <REG51.H>
+   2          #include"LCD.h"
+   3          #include"keypad.h"
+   4          
+   5          void main()
+   6          {
+   7   1        unsigned char a[]="Press any Key:";
+   8   1        int i=0;
+   9   1        lcd_init();
+  10   1        while(a[i]!='\0'){
+  11   2          lcd_data(a[i]);
+  12   2          i++;
+  13   2          msdelay(50);
+  14   2        }
+  15   1        lcd_cmd(0XC0);
+  16   1        while(1)
+  17   1        {
+  18   2          keypad();
+  19   2        }
+  20   1      }
+  21          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    305    ----
+   CONSTANT SIZE    =     15    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      15
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

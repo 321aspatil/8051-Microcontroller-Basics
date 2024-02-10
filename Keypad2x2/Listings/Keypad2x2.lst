@@ -1,0 +1,75 @@
+C51 COMPILER V9.60.7.0   KEYPAD2X2                                                         03/30/2023 11:12:28 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE KEYPAD2X2
+OBJECT MODULE PLACED IN .\Objects\Keypad2x2.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Keypad2x2.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\Keypad2x2.lst) TABS(2) OBJECT(.\Objects\Keypad2x2.obj)
+
+line level    source
+
+   1          #include <REG51.H>
+   2          
+   3          sbit c1=P1^0;
+   4          sbit c2=P1^1;
+   5          sbit r1=P1^2;
+   6          sbit r2=P1^3;
+   7          
+   8          sfr num=0XA0;
+   9          
+  10          /*void msdelay(unsigned int time)
+  11          {
+  12            unsigned int i,j;
+  13            for(i=0;i<time;i++)
+  14            {
+  15              for(j=0;j<1275;j++);
+  16            }
+  17          }
+  18          */
+  19          
+  20          void main()
+  21          {
+  22   1        num=0XA0;
+  23   1        c1=0;
+  24   1        c2=0;
+  25   1        r1=0;
+  26   1        r2=0;
+  27   1        while(1)
+  28   1        {
+  29   2          c1=1;c2=0;
+  30   2          if(r1==1 && r2==0)
+  31   2          {
+  32   3            P2=0x06;
+  33   3          }
+  34   2          if(r1==0 && r2==1)
+  35   2          {
+  36   3            P2=0x4F;
+  37   3          }
+  38   2          c1=0;c2=1;
+  39   2          if(r1==1 && r2==0)
+  40   2          {
+  41   3            P2=0x5B;
+  42   3          }
+  43   2          if(r1==0 && r2==1)
+  44   2          {
+  45   3            P2=0x66;
+  46   3          }
+  47   2          
+  48   2        }
+  49   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     57    ----
+   CONSTANT SIZE    =   ----    ----
+C51 COMPILER V9.60.7.0   KEYPAD2X2                                                         03/30/2023 11:12:28 PAGE 2   
+
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

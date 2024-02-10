@@ -1,0 +1,100 @@
+C51 COMPILER V9.60.7.0   LCD4BIT                                                           04/09/2023 23:05:55 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE LCD4BIT
+OBJECT MODULE PLACED IN .\Objects\lcd4bit.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE lcd4bit.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\l
+                    -cd4bit.lst) TABS(2) OBJECT(.\Objects\lcd4bit.obj)
+
+line level    source
+
+   1          #include <REG51.H>
+   2          
+   3          #define display_port P2 // Data pins connected to port 3 on microcontroller 
+   4          sbit rs = P2^0;         // RS pins connected to pin 2 of port 2
+   5          sbit rw = P2^1;         // RW pins connected to pin 2 of port 2
+   6          sbit e = P2^2;          // E pins connected to pin 2 of port 2
+   7          
+   8          void msdelay(unsigned int time) // Function for creating delay in millisecond
+   9          {
+  10   1        unsigned int i,j;
+  11   1        for(i=0;i<time;i++)
+  12   1        for(j=0;j<1275;j++);
+  13   1      }
+  14          
+  15          void lcd_cmd(unsigned char command) // Function to send command instruction to LCD
+  16          {
+  17   1        display_port = (command & 0xF0);
+  18   1        rs = 0;
+  19   1        rw = 0;
+  20   1        e = 1;
+  21   1        msdelay(1);
+  22   1        e = 0;
+  23   1        
+  24   1        display_port = ((command<<4) & 0xF0) ;
+  25   1        rs = 0;
+  26   1        rw = 0;
+  27   1        e = 1;
+  28   1        msdelay(1);
+  29   1        e = 0;
+  30   1        
+  31   1      }
+  32          
+  33          void lcd_data(unsigned char disp_data) // Function to send display data to LCD
+  34          {
+  35   1        display_port = (disp_data & 0xF0);
+  36   1        rs = 1;
+  37   1        rw = 0;
+  38   1        e = 1;
+  39   1        msdelay(1);
+  40   1        e = 0;
+  41   1        
+  42   1        display_port = ((disp_data<<4) & 0xF0);
+  43   1        rs = 1;
+  44   1        rw = 0;
+  45   1        e = 1;
+  46   1        msdelay(1);
+  47   1        e = 0;
+  48   1        
+  49   1      }
+  50          
+  51          void lcd_init() // Function to prepare LCD and get it ready
+  52          {
+  53   1          lcd_cmd(0x28); // for using 2 lines and 5x7 matrix in LCD
+  54   1          msdelay(10);
+C51 COMPILER V9.60.7.0   LCD4BIT                                                           04/09/2023 23:05:55 PAGE 2   
+
+  55   1          lcd_cmd(0x0C); // turn display ON, cursor blinking
+  56   1          msdelay(10);
+  57   1          lcd_cmd(0x01); // clear screen
+  58   1          msdelay(10);
+  59   1          lcd_cmd(0x80); // bring cursor to position 1 of line 1
+  60   1          msdelay(10);
+  61   1      }
+  62          
+  63          void main()
+  64          {
+  65   1        unsigned char a[] = "MPI-8051"; // string of 14 characters with a null character
+  66   1        int l=0;
+  67   1        lcd_init();
+  68   1        while(a[l] != '\0') // searching the null terminator in the sentences
+  69   1        {
+  70   2          lcd_data(a[l]);
+  71   2          l++;
+  72   2          msdelay(50);
+  73   2        }
+  74   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    195    ----
+   CONSTANT SIZE    =      9    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       9
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

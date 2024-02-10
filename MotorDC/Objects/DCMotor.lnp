@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\DCmotor.obj" 
+TO ".\Objects\DCMotor" 
+PRINT(".\Listings\DCMotor.m51") RAMSIZE(256) 

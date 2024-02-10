@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\keypadphone.obj" 
+TO ".\Objects\Keypadphone" 
+PRINT(".\Listings\Keypadphone.m51")

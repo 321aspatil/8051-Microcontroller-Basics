@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\lcd4bit.obj" 
+TO ".\Objects\lcd4bit" 
+PRINT(".\Listings\lcd4bit.m51")
