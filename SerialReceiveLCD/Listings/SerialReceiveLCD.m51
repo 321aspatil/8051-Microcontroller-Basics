@@ -1,0 +1,278 @@
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    04/17/2023  17:08:16  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\STARTUP.obj, .\Objects\SerialReceiveLCD.obj TO .\Objects\SerialReceiveLCD PRINT (.
+>> \Listings\SerialReceiveLCD.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\STARTUP.obj (?C_STARTUP)
+  .\Objects\SerialReceiveLCD.obj (SERIALRECEIVELCD)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CLDOPTR)
+
+
+LINK MAP OF MODULE:  .\Objects\SerialReceiveLCD (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0005H     UNIT         ?DT?_LCD_STRING?SERIALRECEIVELCD
+            DATA    000DH     0001H     UNIT         _DATA_GROUP_
+            IDATA   000EH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     0036H     UNIT         ?PR?_DELAY?SERIALRECEIVELCD
+            CODE    0836H     002EH     UNIT         ?PR?MAIN?SERIALRECEIVELCD
+            CODE    0864H     002DH     UNIT         ?C?LIB_CODE
+            CODE    0891H     002BH     UNIT         ?PR?_LCD_STRING?SERIALRECEIVELCD
+            CODE    08BCH     0025H     UNIT         ?PR?LCD_INIT?SERIALRECEIVELCD
+            CODE    08E1H     0017H     UNIT         ?PR?_LCD_COMMAND?SERIALRECEIVELCD
+            CODE    08F8H     0017H     UNIT         ?PR?_LCD_DATA?SERIALRECEIVELCD
+            CODE    090FH     000CH     UNIT         ?C_C51STARTUP
+            CODE    091BH     000CH     UNIT         ?PR?UART_INIT?SERIALRECEIVELCD
+            CODE    0927H     0008H     UNIT         ?PR?RX_DATA?SERIALRECEIVELCD
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\SerialReceiveLCD (?C_STARTUP)
+
+
+SEGMENT                                     DATA_GROUP 
+  +--> CALLED SEGMENT                     START    LENGTH
+---------------------------------------------------------
+?C_C51STARTUP                             -----    -----
+  +--> ?PR?MAIN?SERIALRECEIVELCD
+
+?PR?MAIN?SERIALRECEIVELCD                 000DH    0001H
+  +--> ?PR?LCD_INIT?SERIALRECEIVELCD
+  +--> ?PR?UART_INIT?SERIALRECEIVELCD
+  +--> ?PR?RX_DATA?SERIALRECEIVELCD
+  +--> ?PR?_LCD_COMMAND?SERIALRECEIVELCD
+  +--> ?PR?_LCD_DATA?SERIALRECEIVELCD
+  +--> ?PR?_DELAY?SERIALRECEIVELCD
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  04/17/2023  17:08:16  PAGE 2
+
+
+
+?PR?LCD_INIT?SERIALRECEIVELCD             -----    -----
+  +--> ?PR?_DELAY?SERIALRECEIVELCD
+  +--> ?PR?_LCD_COMMAND?SERIALRECEIVELCD
+
+?PR?_LCD_COMMAND?SERIALRECEIVELCD         -----    -----
+  +--> ?PR?_DELAY?SERIALRECEIVELCD
+
+?PR?_LCD_DATA?SERIALRECEIVELCD            -----    -----
+  +--> ?PR?_DELAY?SERIALRECEIVELCD
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\SerialReceiveLCD (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:090FH         SEGMENT       ?C_C51STARTUP
+  I:000EH         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0912H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:090FH         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:090FH         LINE#         133
+  C:0911H         LINE#         134
+  C:0912H         LINE#         135
+  C:0913H         LINE#         136
+  C:0915H         LINE#         185
+  C:0918H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        SERIALRECEIVELCD
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00A0H         PUBLIC        P2
+  C:0816H         PUBLIC        _delay
+  B:0098H.0       PUBLIC        RI
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  04/17/2023  17:08:16  PAGE 3
+
+
+  C:0836H         PUBLIC        main
+  C:0927H         PUBLIC        RX_data
+  C:0891H         PUBLIC        _LCD_String
+  D:0099H         PUBLIC        SBUF
+  C:091BH         PUBLIC        UART_Init
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  C:08BCH         PUBLIC        LCD_Init
+  D:008DH         PUBLIC        TH1
+  C:08F8H         PUBLIC        _LCD_data
+  B:00A0H.1       PUBLIC        en
+  B:0088H.6       PUBLIC        TR1
+  D:00A0H         PUBLIC        LCD_Port
+  B:00A0H.0       PUBLIC        rs
+  C:08E1H         PUBLIC        _LCD_Command
+  -------         PROC          L?0030
+  -------         ENDPROC       L?0030
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        count
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         
+  C:0816H         LINE#         11
+  C:0816H         LINE#         12
+  C:0816H         LINE#         14
+  C:0820H         LINE#         15
+  C:0820H         LINE#         16
+  C:082EH         LINE#         17
+  C:0835H         LINE#         18
+  -------         ENDPROC       _DELAY
+  -------         PROC          _LCD_COMMAND
+  D:0001H         SYMBOL        cmd
+  C:08E1H         LINE#         19
+  C:08E3H         LINE#         20
+  C:08E3H         LINE#         21
+  C:08EEH         LINE#         22
+  C:08F0H         LINE#         23
+  C:08F0H         LINE#         24
+  C:08F0H         LINE#         25
+  C:08F0H         LINE#         26
+  C:08F0H         LINE#         28
+  C:08F0H         LINE#         29
+  C:08F0H         LINE#         30
+  C:08F3H         LINE#         31
+  C:08F5H         LINE#         32
+  -------         ENDPROC       _LCD_COMMAND
+  -------         PROC          _LCD_DATA
+  D:0001H         SYMBOL        char_data
+  C:08F8H         LINE#         34
+  C:08FAH         LINE#         35
+  C:08FAH         LINE#         36
+  C:0905H         LINE#         37
+  C:0907H         LINE#         38
+  C:0907H         LINE#         39
+  C:0907H         LINE#         40
+  C:0907H         LINE#         41
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  04/17/2023  17:08:16  PAGE 4
+
+
+  C:0907H         LINE#         43
+  C:0907H         LINE#         44
+  C:0907H         LINE#         45
+  C:090AH         LINE#         46
+  C:090CH         LINE#         47
+  -------         ENDPROC       _LCD_DATA
+  -------         PROC          _LCD_STRING
+  D:0008H         SYMBOL        str
+  -------         DO            
+  D:000BH         SYMBOL        i
+  -------         ENDDO         
+  C:0891H         LINE#         49
+  C:0897H         LINE#         50
+  C:0897H         LINE#         52
+  C:08AEH         LINE#         53
+  C:08AEH         LINE#         54
+  C:08B1H         LINE#         55
+  C:08BBH         LINE#         56
+  -------         ENDPROC       _LCD_STRING
+  -------         PROC          LCD_INIT
+  C:08BCH         LINE#         57
+  C:08BCH         LINE#         58
+  C:08BCH         LINE#         59
+  C:08C3H         LINE#         60
+  C:08C8H         LINE#         61
+  C:08CDH         LINE#         62
+  C:08D2H         LINE#         63
+  C:08D7H         LINE#         64
+  C:08DCH         LINE#         65
+  -------         ENDPROC       LCD_INIT
+  -------         PROC          UART_INIT
+  C:091BH         LINE#         3
+  C:091BH         LINE#         4
+  C:091BH         LINE#         5
+  C:091EH         LINE#         6
+  C:0921H         LINE#         7
+  C:0924H         LINE#         8
+  C:0926H         LINE#         9
+  -------         ENDPROC       UART_INIT
+  -------         PROC          RX_DATA
+  -------         DO            
+  D:0007H         SYMBOL        a
+  -------         ENDDO         
+  C:0927H         LINE#         10
+  C:0927H         LINE#         11
+  C:0927H         LINE#         13
+  C:092AH         LINE#         14
+  C:092CH         LINE#         15
+  C:092EH         LINE#         16
+  C:092EH         LINE#         17
+  -------         ENDPROC       RX_DATA
+  -------         PROC          MAIN
+  -------         DO            
+  D:000DH         SYMBOL        x
+  -------         ENDDO         
+  C:0836H         LINE#         18
+  C:0836H         LINE#         19
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  04/17/2023  17:08:16  PAGE 5
+
+
+  C:0836H         LINE#         21
+  C:0839H         LINE#         22
+  C:083CH         LINE#         23
+  C:083CH         LINE#         24
+  C:083CH         LINE#         25
+  C:0841H         LINE#         26
+  C:0846H         LINE#         27
+  C:0846H         LINE#         28
+  C:0848H         LINE#         29
+  C:084AH         LINE#         30
+  C:084FH         LINE#         31
+  C:084FH         LINE#         32
+  C:0854H         LINE#         33
+  C:0856H         LINE#         35
+  C:0856H         LINE#         36
+  C:085BH         LINE#         37
+  C:0862H         LINE#         39
+  C:0862H         LINE#         40
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        SERIALRECEIVELCD
+
+  -------         MODULE        ?C?CLDOPTR
+  C:0864H         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_STRING?SERIALRECEIVELCD
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0105H BYTE (12%) *
+******************************************************************************
+
+Program Size: data=15.0 xdata=0 code=306
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

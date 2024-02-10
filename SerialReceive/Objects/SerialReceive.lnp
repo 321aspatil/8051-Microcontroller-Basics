@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\sreceive.obj" 
+TO ".\Objects\SerialReceive" 
+PRINT(".\Listings\SerialReceive.m51")

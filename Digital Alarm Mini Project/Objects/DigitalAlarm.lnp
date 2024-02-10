@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\prog.obj" 
+TO ".\Objects\DigitalAlarm" 
+PRINT(".\Listings\DigitalAlarm.m51")

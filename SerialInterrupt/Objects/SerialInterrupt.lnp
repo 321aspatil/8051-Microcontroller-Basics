@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\prog.obj" 
+TO ".\Objects\SerialInterrupt" 
+PRINT(".\Listings\SerialInterrupt.m51")

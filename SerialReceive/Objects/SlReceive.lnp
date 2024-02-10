@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\sreceive.obj" 
+TO ".\Objects\SlReceive" 
+PRINT(".\Listings\SlReceive.m51")

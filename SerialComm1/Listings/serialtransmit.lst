@@ -1,0 +1,46 @@
+C51 COMPILER V9.60.7.0   SERIALTRANSMIT                                                    04/10/2023 15:12:53 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE SERIALTRANSMIT
+OBJECT MODULE PLACED IN .\Objects\serialtransmit.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE serialtransmit.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Lis
+                    -tings\serialtransmit.lst) TABS(2) OBJECT(.\Objects\serialtransmit.obj)
+
+line level    source
+
+   1          #include <REG51.H>
+   2          void transmit(char ch)
+   3          {
+   4   1        TH1=0xFA;
+   5   1        SCON=0x40;//mode 1 of serial transmission
+   6   1        TR1=1;
+   7   1        SBUF=ch;
+   8   1        while(TI==0);
+   9   1        TI=0; 
+  10   1      }
+  11          void main()
+  12          {
+  13   1        TMOD=0x20;//mode 2 of timer 1 is selected as timer
+  14   1        transmit('*');
+  15   1        transmit('A');
+  16   1        transmit('N');
+  17   1        transmit('I');
+  18   1        transmit('K');
+  19   1        transmit('E');
+  20   1        transmit('T');
+  21   1        transmit('*');
+  22   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     59    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

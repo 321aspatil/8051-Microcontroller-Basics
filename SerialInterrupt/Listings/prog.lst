@@ -1,0 +1,42 @@
+C51 COMPILER V9.60.7.0   PROG                                                              04/12/2023 23:37:04 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE PROG
+OBJECT MODULE PLACED IN .\Objects\prog.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE prog.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\prog
+                    -.lst) TABS(2) OBJECT(.\Objects\prog.obj)
+
+line level    source
+
+   1          void main()   
+   2          {  
+   3   1      TMOD = 0x20:   
+*** ERROR C202 IN LINE 3 OF prog.c: 'TMOD': undefined identifier
+*** ERROR C141 IN LINE 3 OF prog.c: syntax error near ':', expected ';'
+   4   1      TH1= 0xFD;      // baud rate for 9600 bps   
+   5   1      SCON = 0x50;   
+*** ERROR C202 IN LINE 5 OF prog.c: 'SCON': undefined identifier
+   6   1      TR1=1;   
+*** ERROR C202 IN LINE 6 OF prog.c: 'TR1': undefined identifier
+   7   1      EA=l;   
+*** ERROR C202 IN LINE 7 OF prog.c: 'EA': undefined identifier
+   8   1      whlle(l);   
+*** ERROR C202 IN LINE 8 OF prog.c: 'l': undefined identifier
+   9   1      }  
+  10          void ISR_Serial(void) interrupt 4   
+  11          {  
+  12   1      if(TI==l)   
+*** ERROR C202 IN LINE 12 OF prog.c: 'TI': undefined identifier
+  13   1      {   
+  14   2      SBUF='E';   
+*** ERROR C202 IN LINE 14 OF prog.c: 'SBUF': undefined identifier
+  15   2      TI=0;   
+*** ERROR C202 IN LINE 15 OF prog.c: 'TI': undefined identifier
+  16   2      }   
+  17   1      else{   
+  18   2      RI=0;
+*** ERROR C202 IN LINE 18 OF prog.c: 'RI': undefined identifier
+  19   2      }
+  20   1      } 
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  10 ERROR(S)

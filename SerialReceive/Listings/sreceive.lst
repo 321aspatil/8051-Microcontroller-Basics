@@ -1,0 +1,50 @@
+C51 COMPILER V9.60.7.0   SRECEIVE                                                          04/10/2023 18:24:37 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE SRECEIVE
+OBJECT MODULE PLACED IN .\Objects\sreceive.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE sreceive.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -sreceive.lst) TABS(2) OBJECT(.\Objects\sreceive.obj)
+
+line level    source
+
+   1          #include <REG51.H>
+   2          /*void receive(){
+   3            unsigned char rbyte;
+   4            TH1=0xFA;
+   5            SCON=0x50;//mode 1 with reception enable timer 1 as timer
+   6            TR1=1;
+   7            while(RI==0);
+   8            rbyte=SBUF;
+   9            P1=rbyte;
+  10            RI=0; 
+  11          }*/
+  12          int main()
+  13          {
+  14   1        unsigned char mybyte;
+  15   1        TMOD=0x20;
+  16   1        TH1=0xFA;
+  17   1        SCON=0x50;//mode 1 with reception enable timer 1 as timer
+  18   1        TR1=1;
+  19   1        while(1)
+  20   1        {
+  21   2          while(RI==0);
+  22   2          mybyte=SBUF;
+  23   2          P1=mybyte;
+  24   2          RI=0; 
+  25   2        }
+  26   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     22    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

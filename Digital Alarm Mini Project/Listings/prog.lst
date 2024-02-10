@@ -1,0 +1,250 @@
+C51 COMPILER V9.60.7.0   PROG                                                              04/24/2023 18:38:02 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE PROG
+OBJECT MODULE PLACED IN .\Objects\prog.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE prog.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\prog
+                    -.lst) TABS(2) OBJECT(.\Objects\prog.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          int keypad();
+   3          void tochar(unsigned int value);
+   4          sbit buzzer=P0^0;
+   5          sbit r0=P2^0; sbit r1=P2^1; sbit r2=P2^2; sbit r3=P2^3; sbit c0=P2^5; sbit c1=P2^6;
+   6          sbit c2=P2^7; sbit en=P3^6; sbit rs=P3^5; sbit rw=P3^7;
+   7          char hour[]="HOURS-> 01 - 12",mint[]="MINTS-> 01 - 60";
+   8          char alarm[]=" DIGITAL ALARM";
+   9          int count=0,H,M,S=1,hour1[1],mint1[1],H1,M1,hour2[1],mint2[1]; 
+  10          
+  11          void delay(unsigned int no)
+  12          {
+  13   1      unsigned int i,j;
+  14   1      for(j=0;j<=no;j++)
+  15   1      for(i=0;i<=2;i++); 
+  16   1      }
+  17          
+  18          void lcdcmd(unsigned int  command){
+  19   1      P1=command; rw=0; rs=0; en=0; delay(300); en=1; delay(300); en=0;
+  20   1      }
+  21          
+  22          void lcddata(char data1)
+  23          {
+  24   1      P1=data1; rw=0; rs=1; en=0; delay(300); en=1; delay(300); en=0;
+  25   1      }
+  26           
+  27          int scankey(){ 
+  28   1       r0=1;r1=1;r2=1;r3=0;
+  29   1        if(c0==0) { return 2; }
+  30   1      }
+  31          
+  32          
+  33          void checkconditions(){
+  34   1        unsigned int i;
+  35   1        i=scankey(); 
+  36   1      while(i==2)
+  37   1      {
+  38   2      count=0;
+  39   2        
+  40   2      lcdcmd(0x01); lcdcmd(0x80);
+  41   2      while(hour[count]!='\0')
+  42   2      {
+  43   3      lcddata(hour[count]);count++;
+  44   3      }
+  45   2      count=0; lcdcmd(0xC8);
+  46   2      while(count!=2)
+  47   2      {
+  48   3      hour2[count]=keypad();count++;
+  49   3      }
+  50   2      H1=(hour2[0]*10)+hour2[1];
+  51   2      count=0; lcdcmd(0x01); lcdcmd(0x80);
+  52   2      while(mint[count]!='\0')
+  53   2      {
+  54   3      lcddata(mint[count]);count++;
+C51 COMPILER V9.60.7.0   PROG                                                              04/24/2023 18:38:02 PAGE 2   
+
+  55   3      }
+  56   2      count=0; lcdcmd(0xC8);
+  57   2      while(count!=2)
+  58   2      {
+  59   3      mint2[count]=keypad();count++;
+  60   3      }
+  61   2      M1=(mint2[0]*10)+mint2[1];
+  62   2      count=0; delay(1000); lcdcmd(0x01); lcdcmd(0x80); count=0;
+  63   2      while(alarm[count]!='\0')
+  64   2      {
+  65   3      lcddata(alarm[count]);count++;
+  66   3      }
+  67   2      count=0;
+  68   2      lcdcmd(0xC4);tochar(H);lcddata(':');tochar(M);lcdcmd(0xCB);tochar(S);
+  69   2      i=1;
+  70   2      } 
+  71   1      
+  72   1      if(S>=60) { M++; }
+  73   1      
+  74   1      if(M>=60) { H++; }
+  75   1      
+  76   1      if((H==13) && (M>=60) && (S>=60))
+  77   1      {
+  78   2      S=1; H=1; M=1;
+  79   2      lcdcmd(0x01); count=0;
+  80   2      while(alarm[count]!='\0')
+  81   2      {
+  82   3      lcddata(alarm[count]);count++;
+  83   3      }
+  84   2      count=0;
+  85   2      lcdcmd(0xC4);tochar(H);lcddata(' ');lcddata(':');tochar(M);lcddata(' ');lcdcmd(0xCB);tochar(S);lcddata(' '
+             -);
+  86   2      }  
+  87   1      if(S>=60)
+  88   1      { S=1;
+  89   2      lcdcmd(0xC4);tochar(H);lcddata(':');tochar(M);lcdcmd(0xCB);tochar(S);lcddata(' ');
+  90   2      }
+  91   1      if(M>=60)
+  92   1      { M=1;
+  93   2      lcdcmd(0xC4);tochar(H);lcddata(':');tochar(M);lcddata(' ');lcdcmd(0xCB);tochar(S);lcddata(' ');
+  94   2      }}
+  95          
+  96          void clockdelay()
+  97          {
+  98   1      int count=0,sec;
+  99   1      for(sec=0;sec<60;sec++){
+ 100   2      count=0;
+ 101   2      while(count!=495)
+ 102   2      {
+ 103   3      TMOD=0x01;  //16-bit timer0 selected
+ 104   3      TH0=0xF8;   // Loading high byte in TH
+ 105   3      TL0=0xCC;   // Loaded low byte in TL
+ 106   3      TR0=1;      // Running the timer
+ 107   3      while(!TF0);   //Checking the timer flag register if it is not equal to 1 
+ 108   3      TR0 = 0;      // If TF0=1 stop the timer
+ 109   3      TF0 = 0;      // Clear the Timer Flag bit for next calculation
+ 110   3      count++;
+ 111   3      }
+ 112   2      S++;lcdcmd(0xCB);tochar(S);
+ 113   2      checkconditions();
+ 114   2      if(H==H1) 
+ 115   2      {
+C51 COMPILER V9.60.7.0   PROG                                                              04/24/2023 18:38:02 PAGE 3   
+
+ 116   3      if(M==M1)
+ 117   3      buzzer=0;
+ 118   3      }}}
+ 119          
+ 120          void lcdint()
+ 121          {
+ 122   1      lcdcmd(0x30); delay(3000); lcdcmd(0x30); delay(3000); lcdcmd(0x30); delay(3000);
+ 123   1      lcdcmd(0x30); delay(3000); lcdcmd(0x30); delay(3000); lcdcmd(0x38); delay(3000);
+ 124   1      lcdcmd(0x01); delay(3000); lcdcmd(0x0C); delay(3000); lcdcmd(0x80); delay(3000);
+ 125   1      }
+ 126          
+ 127          
+ 128          int keypad()
+ 129          {
+ 130   1      char c='a';
+ 131   1      while(c!='s'){
+ 132   2      r0=0;r1=1;r2=1;r3=1;
+ 133   2      if(c0==0){lcddata('1');delay(20000);c='s';return 1;}
+ 134   2       if(c1==0){lcddata('2');delay(20000);c='s';return 2;}
+ 135   2       if(c2==0){lcddata('3');delay(20000);c='s';return 3;}
+ 136   2      
+ 137   2      r0=1;r1=0;r2=1;r3=1;
+ 138   2      if(c0==0){lcddata('4');delay(20000);c='s';return 4;}
+ 139   2       if(c1==0){lcddata('5');delay(20000);c='s';return 5;}
+ 140   2       if(c2==0){lcddata('6');delay(20000);c='s';return 6;}
+ 141   2      
+ 142   2      r0=1;r1=1;r2=0;r3=1;
+ 143   2      if(c0==0){lcddata('7');delay(20000);c='s';return 7;}
+ 144   2       if(c1==0){lcddata('8');delay(20000);c='s';return 8;}
+ 145   2       if(c2==0){lcddata('9');delay(20000);c='s';return 9;}
+ 146   2      
+ 147   2      r0=1;r1=1;r2=1;r3=0;
+ 148   2       if(c1==0){lcddata('0');delay(20000);c='s';return 0;}
+ 149   2        c='a';
+ 150   2      }
+ 151   1      }
+ 152          
+ 153          
+ 154          void settime()      //Setting time
+ 155          {
+ 156   1      lcdcmd(0x01); lcdcmd(0x80);
+ 157   1      while(hour[count]!='\0')
+ 158   1      {
+ 159   2      lcddata(hour[count]);count++;
+ 160   2      }
+ 161   1      count=0; lcdcmd(0xC8);
+ 162   1      while(count!=2)
+ 163   1      {
+ 164   2      hour1[count]=keypad();count++;
+ 165   2      }
+ 166   1      H=(hour1[0]*10)+hour1[1];
+ 167   1      count=0; lcdcmd(0x01); lcdcmd(0x80);
+ 168   1      while(mint[count]!='\0')
+ 169   1      {
+ 170   2      lcddata(mint[count]);count++;
+ 171   2      }
+ 172   1      count=0; lcdcmd(0xC8);
+ 173   1      while(count!=2)
+ 174   1      {
+ 175   2      mint1[count]=keypad();count++;
+ 176   2      }
+ 177   1      M=(mint1[0]*10)+mint1[1];
+C51 COMPILER V9.60.7.0   PROG                                                              04/24/2023 18:38:02 PAGE 4   
+
+ 178   1      count=0; delay(1000); lcdcmd(0x01); lcdcmd(0x80);
+ 179   1      }
+ 180          
+ 181          
+ 182          void start(){
+ 183   1      count=0; lcdcmd(0x01); lcdcmd(0x80);
+ 184   1      while(alarm[count]!='\0')
+ 185   1      {
+ 186   2      lcddata(alarm[count]);count++;
+ 187   2      }
+ 188   1      count=0;
+ 189   1      lcdcmd(0xC4);
+ 190   1      tochar(H);
+ 191   1      lcddata(':');
+ 192   1      tochar(M);
+ 193   1      lcdcmd(0xCB);
+ 194   1      tochar(S);
+ 195   1      }
+ 196          
+ 197          void tochar(unsigned int value)
+ 198          {
+ 199   1      char tendigit,unitdigit;
+ 200   1      tendigit=value/10;
+ 201   1      if((tendigit+48)>='1')
+ 202   1      lcddata(tendigit+48);
+ 203   1      unitdigit=value%10;
+ 204   1      lcddata(unitdigit+48);
+ 205   1      }
+ 206          
+ 207          void main()
+ 208          {
+ 209   1      unsigned int i=0;
+ 210   1      P0=0x00;             P1=0x00; P2=0xF0; P3=0x0F;
+ 211   1      lcdint(); buzzer=0;
+ 212   1      settime(); start(); 
+ 213   1      while(1){
+ 214   2      clockdelay();
+ 215   2      buzzer=1;
+ 216   2      }
+ 217   1      }
+*** WARNING C291 IN LINE 30 OF prog.c: not every exit path returns a value
+*** WARNING C291 IN LINE 151 OF prog.c: not every exit path returns a value
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1468    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     67      10
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)
